@@ -15,7 +15,7 @@
 #define RCTL_KK   RCTL_T(KC_K)
 #define RALT_KL   RALT_T(KC_L)
 #define RG_SCLN   RGUI_T(KC_SCLN)
-
+)
 #define LT1_ESC LT(1,KC_ESC)
 #define LT1_BSPC LT(1, KC_BSPC)
 
@@ -136,6 +136,17 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
       default:
          return TAPPING_TERM;
 }}
+
+
+const key_override_t backspace_alt_tab = ko_make_basic(
+   KC_LALT, KC_BSPC, KC_TAB
+);
+
+// This globally defines all key overrides to be used
+const key_override_t **key_overrides = (const key_override_t *[]){
+   $backspace_alt_tab,
+   NULL
+}
 
 // bool encoder_update_user(uint8_t index, bool clockwise) {
 //     if (index == 0) {
