@@ -121,6 +121,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
+    case KC_ESC:
+        // Detect the activation of only Left Alt
+        if (get_mods() == MOD_BIT(KC_LALT)) {
+            if (record->event.pressed) {
+                // No need to register KC_LALT because it's already active.
+                // The Alt modifier will apply on this KC_TAB.
+                register_code(KC_TAB);
+            } else {
+                unregister_code(KC_TAB);
+            }
+            // Do not let QMK process the keycode further
+            return false;
+        }
+        // Else, let QMK process the KC_ESC keycode as usual
+        return true;    
   }
   return true;
 }
@@ -138,15 +153,15 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 }}
 
 
-const key_override_t backspace_alt_tab = ko_make_basic(
-   MOD_LALT, KC_BSPC, KC_TAB
-);
+// const key_override_t backspace_alt_tab = ko_make_basic(
+//    MOD_MASK_LALT, KC_BSPC, KC_TAB
+// );
 
-// This globally defines all key overrides to be used
-const key_override_t **key_overrides = (const key_override_t *[]){
-   &backspace_alt_tab,
-   NULL
-}
+// // This globally defines all key overrides to be used
+// const key_override_t **key_overrides = (const key_override_t *[]){
+//    &backspace_alt_tab,
+//    NULL
+// };
 
 // bool encoder_update_user(uint8_t index, bool clockwise) {
 //     if (index == 0) {
