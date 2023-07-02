@@ -121,7 +121,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
-    case KC_ESC:
+    case KC_BSPC:
         // Detect the activation of only Left Alt
         if (get_mods() == MOD_BIT(KC_LALT)) {
             if (record->event.pressed) {
