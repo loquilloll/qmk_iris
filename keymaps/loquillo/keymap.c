@@ -139,12 +139,12 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 
 
 const key_override_t backspace_alt_tab = ko_make_basic(
-   KC_LALT, KC_BSPC, KC_TAB
+   MOD_LALT, KC_BSPC, KC_TAB
 );
 
 // This globally defines all key overrides to be used
 const key_override_t **key_overrides = (const key_override_t *[]){
-   $backspace_alt_tab,
+   &backspace_alt_tab,
    NULL
 }
 
