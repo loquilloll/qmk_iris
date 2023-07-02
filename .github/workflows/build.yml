@@ -1,0 +1,38 @@
+name: Build QMK firmware
+on: [push, workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: qmkfm/qmk_cli
+
+    steps:
+    - name: Disable git safe directory checks
+      run : git config --global --add safe.directory '*'
+
+    - name: Checkout QMK
+      uses: actions/checkout@v3
+      with:
+        repository: qmk/qmk_firmware
+        submodules: recursive
+
+    - name: Checkout userspace
+      uses: actions/checkout@v3
+      with:
+        path: users/${{ github.actor }}
+
+    - name: Copy Keymap
+      run: cp -r users/${{ github.actor }}/keymaps/loquillo keyboards/keebio/iris/keymaps/
+
+    - name: Build firmware
+      run: qmk compile -kb keebio/iris/rev4 -km loquillo
+
+    - name: Archive firmware
+      uses: actions/upload-artifact@v3
+      continue-on-error: true
+      with:
+        name: iris_rev4_${{ github.actor }}
+        path: |
+          *.hex
+          *.bin
+          *.uf2
