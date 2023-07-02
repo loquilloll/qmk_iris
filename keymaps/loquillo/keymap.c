@@ -15,7 +15,7 @@
 #define RCTL_KK   RCTL_T(KC_K)
 #define RALT_KL   RALT_T(KC_L)
 #define RG_SCLN   RGUI_T(KC_SCLN)
-)
+
 #define LT1_ESC LT(1,KC_ESC)
 #define LT1_BSPC LT(1, KC_BSPC)
 
